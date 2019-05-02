@@ -6,4 +6,9 @@ Implemention Of Particle Swarm Optimization Algorithm in C++
 make
 ./pso
 ```
+# Visualizer
+<p align="centre">
+<img src = "https://github.com/ErfanFathi/pso/blob/master/Utils/:::O.gif"</img>
+</p>
+
 Hope Enjoy :)
