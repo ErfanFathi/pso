@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -c -std=c++14
-LDFLAGS =
+LDFLAGS = `pkg-config opencv --cflags --libs`
 SOURCES = Main.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = pso
@@ -8,7 +8,7 @@ EXECUTABLE = pso
 all : $(EXECUTABLE)
 
 $(EXECUTABLE) : $(OBJECTS)
-	$(CC) $(OBJECTS) -o $(EXECUTABLE)
+	$(CC) $(OBJECTS) -o $(EXECUTABLE) $(LDFLAGS)
 
 $(OBJECTS) : $(SOURCES)
 	$(CC) $(CFLAGS) $(SOURCES)

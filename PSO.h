@@ -1,13 +1,10 @@
 #ifndef PSO_H
 #define PSO_H
 
-#include <iostream>
-#include <random>
+#include "Environment.h"
 #include <algorithm>
 #include <functional>
 #include <utility>
-
-using namespace std;
 
 class PSO
 {
@@ -31,7 +28,7 @@ private:
 public:
 
     PSO( int    NOP = 500  , int    NOD = 1   , int    MOI = 1000,
-         double MIR = -2.0 , double MAR = 2.0 , double ERC = 0.01,
+         double MIR = 0    , double MAR = 640 , double ERC = 0.01,
          double w   = 0.9  , double c1  = 0.6 , double c2  = 1.4 )
          : numberOfParticles  (NOP),
          numberOfDimensions   (NOD),
@@ -62,8 +59,12 @@ public:
 
     auto set_c2                ( double c2  ) { this->C2                 = c2  ; };
 
-    auto optimize( function<double (vector<double> )> fitFunc )
+    auto optimize( function<double (vector<double>, Point )> fitFunc )
     {
+        // Set A Instance From Environment And Get Goal Position
+        Environment ENV;
+        auto goal = ENV.getGoal();
+
         mt19937 mersenne( static_cast<unsigned int>( time( nullptr ) ) );
         uniform_real_distribution<> rnd1( minRand, maxRand );
         uniform_real_distribution<> rnd2( 0, 1 );
@@ -94,7 +95,7 @@ public:
             localBest.clear();
             localBest = temp;
 
-            if ( fitFunc( localBest ) < fitFunc( globalBest ) )
+            if ( fitFunc( localBest, goal ) < fitFunc( globalBest, goal ) )
             {
                 globalBest.clear();
                 globalBest = localBest;
@@ -102,7 +103,7 @@ public:
         }
 
         int iterator = 0;
-        while ( fitFunc( globalBest ) > errorCon and iterator < maximumOfIteration )
+        while ( fitFunc( globalBest, goal ) > errorCon and iterator < maximumOfIteration )
         {
             ++iterator;
             for ( int i = 0; i < numberOfParticles; ++i )
@@ -115,36 +116,39 @@ public:
                     velocity[j] = W * velocity[j] 
                                     + ( C1 * r1 * ( localBest[j]  - particles[i][j] ) )
                                     + ( C2 * r2 * ( globalBest[j] - particles[i][j] ) );
-                    
+
                     particles[i][j] = particles[i][j] + velocity[j];
                 }
 
-                if ( fitFunc( particles[i] ) < fitFunc( localBest ) )
+                if ( fitFunc( particles[i], goal ) < fitFunc( localBest, goal ) )
                 {
                     localBest.clear();
                     localBest = particles[i];
                 }
             }
 
-            if ( fitFunc( localBest ) < fitFunc( globalBest ) )
+            if ( fitFunc( localBest, goal ) < fitFunc( globalBest, goal ) )
             {
                 globalBest.clear();
                 globalBest = localBest;
             }
-
+            
+            // Update Monitor
+            ENV.Update( particles );
         }
 
-        this->result = make_pair( globalBest, fitFunc(globalBest) );
-        return make_pair( globalBest, fitFunc(globalBest) );
+        // Print Goal Position
+        cout<<"Goal Point Is : "<<goal.x<<" , "<<goal.y<<endl;
+
+        this->result = make_pair( globalBest, fitFunc(globalBest, goal) );
+        return make_pair( globalBest, fitFunc(globalBest, goal) );
 
     }
 
     auto printResult() -> void
     {
-        for (int i = 0; i < result.first.size(); i++)
-            cout << "Parameter " << i+1 << " : " << result.first[i] << endl;
-
-        cout << "error : " << result.second << endl;
+        cout << "PSO Predicted Point : " << result.first[0] << " , " << result.first[1] << endl;
+        cout << "Error : " << result.second << endl;
     }
 
 };

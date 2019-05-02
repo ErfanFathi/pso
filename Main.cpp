@@ -1,30 +1,30 @@
 #include "PSO.h"
 
-auto func( vector<double> x ) -> double
+auto func( vector<double> x, Point goal ) -> double
 {
-    double p1 = pow(x[0], 2) - 4; 
-
-    return abs( p1 );
+    double p1 = pow(x[0] - goal.x, 2);
+    double p2 = pow(x[1] - goal.y, 2);
+    double error = sqrt(p2+p1);
+    return  error;
 }
 
 auto main() -> int
 {
     PSO pso;
 
-    pso.set_numberOfParticles(600);
-    pso.set_numberOfDimension(1);
-    pso.set_maximumOfIteration(2000);
-    pso.set_minRand(-3.1);
-    pso.set_maxRand(1.6);
-    pso.set_errorCon(0.01);
-    pso.set_w(0.98);
-    pso.set_c1(0.8);
-    pso.set_c2(1.2);
+    pso.set_numberOfParticles(10);
+    pso.set_numberOfDimension(2);
+    pso.set_maximumOfIteration(200);
+    pso.set_minRand(0);
+    pso.set_maxRand(480);
+    pso.set_errorCon(1);
+    pso.set_w(0.5);
+    pso.set_c1(0.2);
+    pso.set_c2(1.8);
 
     auto result = pso.optimize(func);
     
     pso.printResult();
 
-    
     return 0;
 }
