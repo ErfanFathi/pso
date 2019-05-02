@@ -7,7 +7,7 @@ make
 ./pso
 ```
 # Visualizer
-<p align="centre">
+<p align="center">
 <img src = "https://github.com/ErfanFathi/pso/blob/master/Utils/:::O.gif"</img>
 </p>
 
