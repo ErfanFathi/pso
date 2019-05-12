@@ -66,7 +66,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Finale
 
-Feel free to use, modify or re-publish this code. And please feel free to fork the code 
+Feel free to use, modify this code. And please feel free to fork the code 
 from Github and send pull requests.
 
 Report any comment or bugs to:<br />
