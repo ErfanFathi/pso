@@ -21,7 +21,7 @@ sudo apt install libopencv-dev
 ## How To Use ?
 in your main file, include pso header and write your fitness function
 then set instance of pso and set your parameters. then call optimize 
-function and pass the fitness function in optimize parameter . EASY :)
+function and pass the fitness function in optimize parameter . EASY :)<br />
 Recommended : Delete environment for your tasks
 
 ```javascript
@@ -69,9 +69,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 Feel free to use, modify or re-publish this code. And please feel free to fork the code 
 from Github and send pull requests.
 
-Report any comment or bugs to:
-fathierfan97@gmail.com
+Report any comment or bugs to:<br />
+fathierfan97@gmail.com<br />
 
-Regards,
-Erfan Fathi
+Regards,<br />
+Erfan Fathi<br />
 
