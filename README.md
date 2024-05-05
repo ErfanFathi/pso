@@ -44,6 +44,7 @@ auto main() -> int
 ## Compilation
 
 ```bash
+cmake .
 make
 ./pso
 ```
